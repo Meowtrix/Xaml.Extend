@@ -71,7 +71,11 @@ namespace Meowtrix.WPF.Extend.Controls
             if (Filters != null)
                 foreach (var str in Filters)
                     dialog.Filters.Add(new CommonFileDialogFilter(str, str));
-            dialog.DefaultDirectory = Path.GetDirectoryName(Filename);
+            try
+            {
+                dialog.DefaultDirectory = Path.GetDirectoryName(Filename);
+            }
+            catch { }
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 var old = Filename;
