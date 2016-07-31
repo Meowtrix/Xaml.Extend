@@ -9,7 +9,7 @@ using System.Windows.Markup;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Meowtrix.WPF.Extend")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Controls and helpers for WPF.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Meowtrix")]
 [assembly: AssemblyProduct("Meowtrix.WPF.Extend")]
