@@ -10,6 +10,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
+      v1.1.0
+      - Add FilePicker.
       v1.0.0
       - Add EnumComboBox.
     </releaseNotes>
