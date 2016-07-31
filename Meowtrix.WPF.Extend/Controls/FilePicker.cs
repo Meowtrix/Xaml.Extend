@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Meowtrix.WPF.Extend.Controls
 {
     public enum FilePickerType { OpenFile, SaveFile, Folder }
 
+    [TemplatePart(Name = nameof(PART_Button), Type = typeof(ButtonBase))]
     public class FilePicker : Control
     {
         static FilePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FilePicker), new FrameworkPropertyMetadata(typeof(FilePicker)));
         }
+
+        private ButtonBase PART_Button;
 
         public string Filename
         {
@@ -47,6 +51,16 @@ namespace Meowtrix.WPF.Extend.Controls
         // Using a DependencyProperty as the backing store for Filters.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FiltersProperty =
             DependencyProperty.Register("Filters", typeof(IEnumerable<string>), typeof(FilePicker), new PropertyMetadata(null));
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            if (PART_Button != null)
+                PART_Button.Click -= OnClick;
+            PART_Button = GetTemplateChild(nameof(PART_Button)) as ButtonBase;
+            if (PART_Button != null)
+                PART_Button.Click += OnClick;
+        }
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
