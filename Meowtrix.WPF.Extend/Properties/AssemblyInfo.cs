@@ -54,4 +54,5 @@ using System.Windows.Markup;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: XmlnsDefinition("urn:meowtrix","Meowtrix.WPF.Extend.Controls")]
+[assembly: XmlnsDefinition("urn:meowtrix", "Meowtrix.WPF.Extend")]
+[assembly: XmlnsDefinition("urn:meowtrix", "Meowtrix.WPF.Extend.Controls")]
