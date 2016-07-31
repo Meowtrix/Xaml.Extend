@@ -28,7 +28,7 @@ namespace Meowtrix.WPF.Extend.Controls
 
         // Using a DependencyProperty as the backing store for Filename.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilenameProperty =
-            DependencyProperty.Register("Filename", typeof(string), typeof(FilePicker), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(Filename), typeof(string), typeof(FilePicker), new PropertyMetadata(string.Empty));
 
         public event EventHandler<PropertyChangedEventArgs<string>> FilenameChanged;
 
@@ -40,7 +40,7 @@ namespace Meowtrix.WPF.Extend.Controls
 
         // Using a DependencyProperty as the backing store for PickerType.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PickerTypeProperty =
-            DependencyProperty.Register("PickerType", typeof(FilePickerType), typeof(FilePicker), new PropertyMetadata(FilePickerType.OpenFile));
+            DependencyProperty.Register(nameof(PickerType), typeof(FilePickerType), typeof(FilePicker), new PropertyMetadata(FilePickerType.OpenFile));
 
         public IEnumerable<string> Filters
         {
@@ -50,7 +50,7 @@ namespace Meowtrix.WPF.Extend.Controls
 
         // Using a DependencyProperty as the backing store for Filters.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FiltersProperty =
-            DependencyProperty.Register("Filters", typeof(IEnumerable<string>), typeof(FilePicker), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Filters), typeof(IEnumerable<string>), typeof(FilePicker), new PropertyMetadata(null));
 
         public override void OnApplyTemplate()
         {
