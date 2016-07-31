@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 
 namespace Meowtrix.WPF.Extend.Controls
@@ -17,9 +18,23 @@ namespace Meowtrix.WPF.Extend.Controls
             }
         }
 
+        private class EnumComboBoxItem
+        {
+            public string Name { get; }
+            public Enum Value { get; }
+            public EnumComboBoxItem(Enum @enum)
+            {
+                Value = @enum;
+                Name = @enum.ToString();
+            }
+        }
+
         private void BuildItemsSource(Type type)
         {
-
+            ItemsSource = Enum.GetValues(type).Cast<Enum>().Select(x => new EnumComboBoxItem(x)).ToArray();
+            SelectedValuePath = nameof(EnumComboBoxItem.Name);
+            DisplayMemberPath = nameof(EnumComboBoxItem.Value);
+            SelectedIndex = 0;
         }
     }
 }
