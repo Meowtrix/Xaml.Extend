@@ -32,8 +32,8 @@ namespace Meowtrix.WPF.Extend.Controls
         private void BuildItemsSource(Type type)
         {
             ItemsSource = Enum.GetValues(type).Cast<Enum>().Select(x => new EnumComboBoxItem(x)).ToArray();
-            SelectedValuePath = nameof(EnumComboBoxItem.Name);
-            DisplayMemberPath = nameof(EnumComboBoxItem.Value);
+            SelectedValuePath = nameof(EnumComboBoxItem.Value);
+            DisplayMemberPath = nameof(EnumComboBoxItem.Name);
             SelectedIndex = 0;
         }
     }
