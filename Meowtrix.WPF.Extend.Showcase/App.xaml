@@ -1,0 +1,9 @@
+﻿<Application x:Class="Meowtrix.WPF.Extend.Showcase.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Meowtrix.WPF.Extend.Showcase"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
