@@ -11,9 +11,10 @@
                             <ColumnDefinition Width="4"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Text="{TemplateBinding Filename}"/>
+                        <TextBox Margin="0" Text="{TemplateBinding Filename}"/>
                         <Button x:Name="PART_Button"
                                 Grid.Column="2"
+                                Margin="0"
                                 Content=" ... "/>
                     </Grid>
                 </ControlTemplate>
