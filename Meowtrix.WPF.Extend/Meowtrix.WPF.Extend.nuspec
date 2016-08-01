@@ -10,10 +10,12 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-      v1.1.0
-      - Add FilePicker.
-      v1.0.0
-      - Add EnumComboBox.
+v1.1.1
+- Bug fixes.
+v1.1.0
+- Add FilePicker.
+v1.0.0
+- Add EnumComboBox.
     </releaseNotes>
     <copyright>Copyright Meowtrix 2016</copyright>
     <tags>ComboBox Enum</tags>
