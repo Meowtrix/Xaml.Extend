@@ -95,6 +95,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Meowtrix.WPF.Extend\Meowtrix.WPF.Extend.csproj">
+      <Project>{15cacac9-9e3c-4056-a26d-b4b9cd7fe596}</Project>
+      <Name>Meowtrix.WPF.Extend</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
