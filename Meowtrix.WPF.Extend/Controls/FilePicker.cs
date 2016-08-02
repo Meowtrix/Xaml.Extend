@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Meowtrix.Linq;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Meowtrix.WPF.Extend.Controls
@@ -69,8 +71,7 @@ namespace Meowtrix.WPF.Extend.Controls
             else if (PickerType == FilePickerType.SaveFile) dialog = new CommonSaveFileDialog();
             else dialog = new CommonOpenFileDialog { IsFolderPicker = true };
             if (Filters != null)
-                foreach (var str in Filters)
-                    dialog.Filters.Add(new CommonFileDialogFilter(str, str));
+                dialog.Filters.AddRange(Filters.Select(x => new CommonFileDialogFilter(x, x)));
             try
             {
                 dialog.DefaultDirectory = Path.GetDirectoryName(Filename);
