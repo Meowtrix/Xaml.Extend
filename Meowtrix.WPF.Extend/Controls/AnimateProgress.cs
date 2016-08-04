@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+using System.Windows.Media.Animation;
 
 namespace Huoyaoyuan.AdmiralRoom.Controls
 {
@@ -57,14 +58,30 @@ namespace Huoyaoyuan.AdmiralRoom.Controls
             }
         }
 
-        private void DoAnimation(double fromValue, double ToValue)
+        private void DoAnimation(double fromValue, double toValue)
         {
-
+            if (PART_Track != null && PART_Indicator != null)
+            {
+                double fromwidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((fromValue - Minimum) / (Maximum - Minimum)));
+                double towidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((toValue - Minimum) / (Maximum - Minimum)));
+                var animation = new DoubleAnimation
+                {
+                    From = fromwidth,
+                    To = towidth,
+                    Duration = TimeSpan.FromSeconds(0),
+                    EasingFunction = new CircleEase { EasingMode = EasingMode.EaseOut }
+                };
+                PART_Indicator.BeginAnimation(WidthProperty, animation);
+            }
         }
 
         private void SetIndicator(double value)
         {
-
+            if (PART_Track != null && PART_Indicator != null)
+            {
+                double rate = Maximum <= Minimum ? 0 : ((value - Minimum) / (Maximum - Minimum));
+                PART_Indicator.Width = PART_Track.ActualWidth * rate;
+            }
         }
     }
     public enum InitAnimateFrom { None, Minimum, Maximum, Custom }
