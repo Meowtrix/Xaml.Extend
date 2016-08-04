@@ -73,7 +73,7 @@ namespace Meowtrix.WPF.Extend.Controls
                 {
                     From = fromwidth,
                     To = towidth,
-                    Duration = TimeSpan.FromSeconds(0),
+                    Duration = TimeSpan.FromSeconds(1),
                     EasingFunction = new CircleEase { EasingMode = EasingMode.EaseOut }
                 };
                 PART_Indicator.BeginAnimation(WidthProperty, animation);
