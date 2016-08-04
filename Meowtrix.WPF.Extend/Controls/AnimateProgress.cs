@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Meowtrix.WPF.Extend.Controls
@@ -59,13 +60,14 @@ namespace Meowtrix.WPF.Extend.Controls
         public static readonly DependencyProperty EasingFunctionProperty =
             DependencyProperty.Register(nameof(EasingFunction), typeof(IEasingFunction), typeof(AnimateProgress), new PropertyMetadata(new CircleEase { EasingMode = EasingMode.EaseOut }));
 
-        protected override void OnMaximumChanged(double oldMaximum, double newMaximum) => SetIndicator(Value);
-
-        protected override void OnMinimumChanged(double oldMinimum, double newMinimum) => SetIndicator(Value);
-
         protected override void OnValueChanged(double oldValue, double newValue)
         {
             DoAnimation(oldValue, newValue);
+        }
+
+        private void OnRendering(object sender, EventArgs e)
+        {
+            
         }
 
         private double InRange(double value) => value > Maximum ? Maximum : value < Minimum ? Minimum : value;
@@ -94,19 +96,7 @@ namespace Meowtrix.WPF.Extend.Controls
 
         private void DoAnimation(double fromValue, double toValue)
         {
-            if (PART_Track != null && PART_Indicator != null)
-            {
-                double fromwidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((InRange(fromValue) - Minimum) / (Maximum - Minimum)));
-                double towidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((InRange(toValue) - Minimum) / (Maximum - Minimum)));
-                var animation = new DoubleAnimation
-                {
-                    From = fromwidth,
-                    To = towidth,
-                    Duration = TimeSpan.FromSeconds(1),
-                    EasingFunction = new CircleEase { EasingMode = EasingMode.EaseOut }
-                };
-                PART_Indicator.BeginAnimation(WidthProperty, animation);
-            }
+            CompositionTarget.Rendering += OnRendering;
         }
 
         private void SetIndicator(double value)
