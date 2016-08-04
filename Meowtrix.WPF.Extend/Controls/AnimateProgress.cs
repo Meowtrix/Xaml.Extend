@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
-namespace Huoyaoyuan.AdmiralRoom.Controls
+namespace Meowtrix.WPF.Extend.Controls
 {
     public class AnimateProgress : ProgressBar
     {
@@ -30,11 +30,16 @@ namespace Huoyaoyuan.AdmiralRoom.Controls
         public static readonly DependencyProperty CustomAnimateFromProperty =
             DependencyProperty.Register(nameof(CustomAnimateFrom), typeof(double), typeof(AnimateProgress), new PropertyMetadata(0.0));
 
+        protected override void OnMaximumChanged(double oldMaximum, double newMaximum) => SetIndicator(Value);
+
+        protected override void OnMinimumChanged(double oldMinimum, double newMinimum) => SetIndicator(Value);
+
         protected override void OnValueChanged(double oldValue, double newValue)
         {
-            base.OnValueChanged(oldValue, newValue);
             DoAnimation(oldValue, newValue);
         }
+
+        private double InRange(double value) => value > Maximum ? Maximum : value < Minimum ? Minimum : value;
 
         public override void OnApplyTemplate()
         {
@@ -62,8 +67,8 @@ namespace Huoyaoyuan.AdmiralRoom.Controls
         {
             if (PART_Track != null && PART_Indicator != null)
             {
-                double fromwidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((fromValue - Minimum) / (Maximum - Minimum)));
-                double towidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((toValue - Minimum) / (Maximum - Minimum)));
+                double fromwidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((InRange(fromValue) - Minimum) / (Maximum - Minimum)));
+                double towidth = PART_Track.ActualWidth * (Maximum <= Minimum ? 0 : ((InRange(toValue) - Minimum) / (Maximum - Minimum)));
                 var animation = new DoubleAnimation
                 {
                     From = fromwidth,
@@ -79,7 +84,7 @@ namespace Huoyaoyuan.AdmiralRoom.Controls
         {
             if (PART_Track != null && PART_Indicator != null)
             {
-                double rate = Maximum <= Minimum ? 0 : ((value - Minimum) / (Maximum - Minimum));
+                double rate = Maximum <= Minimum ? 0 : ((InRange(value) - Minimum) / (Maximum - Minimum));
                 PART_Indicator.Width = PART_Track.ActualWidth * rate;
             }
         }
