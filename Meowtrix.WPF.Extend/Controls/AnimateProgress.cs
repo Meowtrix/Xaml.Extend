@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
 
 namespace Meowtrix.WPF.Extend.Controls
 {
-    public class AnimateProgress : ProgressBar
+    [TemplatePart(Name = nameof(PART_Indicator), Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = nameof(PART_Track), Type = typeof(FrameworkElement))]
+    public class AnimateProgress : RangeBase
     {
+        static AnimateProgress()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(AnimateProgress), new FrameworkPropertyMetadata(typeof(ProgressBar)));
+            MaximumProperty.OverrideMetadata(typeof(AnimateProgress), new FrameworkPropertyMetadata(100.0));
+        }
+
         private FrameworkElement PART_Indicator;
         private FrameworkElement PART_Track;
 
@@ -29,6 +38,26 @@ namespace Meowtrix.WPF.Extend.Controls
         // Using a DependencyProperty as the backing store for CustomAnimateFrom.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CustomAnimateFromProperty =
             DependencyProperty.Register(nameof(CustomAnimateFrom), typeof(double), typeof(AnimateProgress), new PropertyMetadata(0.0));
+
+        public TimeSpan AnimateDuration
+        {
+            get { return (TimeSpan)GetValue(AnimateDurationProperty); }
+            set { SetValue(AnimateDurationProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for AnimateDuration.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AnimateDurationProperty =
+            DependencyProperty.Register(nameof(AnimateDuration), typeof(TimeSpan), typeof(AnimateProgress), new PropertyMetadata(TimeSpan.FromSeconds(1)));
+
+        public IEasingFunction EasingFunction
+        {
+            get { return (IEasingFunction)GetValue(EasingFunctionProperty); }
+            set { SetValue(EasingFunctionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for EasingFunction.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(nameof(EasingFunction), typeof(IEasingFunction), typeof(AnimateProgress), new PropertyMetadata(new CircleEase { EasingMode = EasingMode.EaseOut }));
 
         protected override void OnMaximumChanged(double oldMaximum, double newMaximum) => SetIndicator(Value);
 
