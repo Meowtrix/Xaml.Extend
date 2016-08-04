@@ -2,22 +2,13 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Meowtrix.WPF.Extend.Controls
 {
-    [TemplatePart(Name = nameof(PART_Indicator), Type = typeof(FrameworkElement))]
-    [TemplatePart(Name = nameof(PART_Track), Type = typeof(FrameworkElement))]
-    public class AnimateProgress : RangeBase
+    public class AnimateProgress : ProgressBar
     {
-        static AnimateProgress()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(AnimateProgress), new FrameworkPropertyMetadata(typeof(ProgressBar)));
-            MaximumProperty.OverrideMetadata(typeof(AnimateProgress), new FrameworkPropertyMetadata(100.0));
-            stopwatch.Start();
-        }
 
         private FrameworkElement PART_Indicator;
         private FrameworkElement PART_Track;
@@ -62,10 +53,7 @@ namespace Meowtrix.WPF.Extend.Controls
         public static readonly DependencyProperty EasingFunctionProperty =
             DependencyProperty.Register(nameof(EasingFunction), typeof(IEasingFunction), typeof(AnimateProgress), new PropertyMetadata(new CircleEase { EasingMode = EasingMode.EaseOut }));
 
-        protected override void OnValueChanged(double oldValue, double newValue)
-        {
-            DoAnimation(oldValue, newValue);
-        }
+        protected override void OnValueChanged(double oldValue, double newValue) => DoAnimation(oldValue, newValue);
 
         private void DoAnimation(double fromValue, double toValue)
         {
@@ -76,8 +64,9 @@ namespace Meowtrix.WPF.Extend.Controls
         }
 
         private double _fromValue, _toValue;
+        private double _trackWidth;
         private TimeSpan animateStartTime;
-        private static Stopwatch stopwatch = new Stopwatch();
+        private static Stopwatch stopwatch = Stopwatch.StartNew();
 
         private void OnRendering(object sender, EventArgs e)
         {
@@ -96,9 +85,10 @@ namespace Meowtrix.WPF.Extend.Controls
 
         public override void OnApplyTemplate()
         {
-            //base.OnApplyTemplate();
+            if (PART_Track != null) PART_Track.SizeChanged -= OnTrackSizeChanged;
             PART_Indicator = GetTemplateChild(nameof(PART_Indicator)) as FrameworkElement;
             PART_Track = GetTemplateChild(nameof(PART_Track)) as FrameworkElement;
+            if (PART_Track != null) PART_Track.SizeChanged += OnTrackSizeChanged;
             switch (InitAnimateFrom)
             {
                 case InitAnimateFrom.None:
@@ -117,12 +107,18 @@ namespace Meowtrix.WPF.Extend.Controls
             }
         }
 
+        private void OnTrackSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _trackWidth = PART_Track.ActualWidth;
+            SetIndicator(Value);
+        }
+
         private void SetIndicator(double value)
         {
             if (PART_Track != null && PART_Indicator != null)
             {
                 double rate = Maximum <= Minimum ? 0 : ((InRange(value) - Minimum) / (Maximum - Minimum));
-                PART_Indicator.Width = PART_Track.ActualWidth * rate;
+                PART_Indicator.Width = _trackWidth * rate;
             }
         }
     }
