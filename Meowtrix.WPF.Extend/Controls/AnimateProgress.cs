@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -15,6 +16,7 @@ namespace Meowtrix.WPF.Extend.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(AnimateProgress), new FrameworkPropertyMetadata(typeof(ProgressBar)));
             MaximumProperty.OverrideMetadata(typeof(AnimateProgress), new FrameworkPropertyMetadata(100.0));
+            stopwatch.Start();
         }
 
         private FrameworkElement PART_Indicator;
@@ -65,21 +67,42 @@ namespace Meowtrix.WPF.Extend.Controls
             DoAnimation(oldValue, newValue);
         }
 
+        private void DoAnimation(double fromValue, double toValue)
+        {
+            _fromValue = fromValue;
+            _toValue = toValue;
+            animateStartTime = stopwatch.Elapsed;
+            CompositionTarget.Rendering += OnRendering;
+        }
+
+        private double _fromValue, _toValue;
+        private TimeSpan animateStartTime;
+        private static Stopwatch stopwatch = new Stopwatch();
+
         private void OnRendering(object sender, EventArgs e)
         {
-            
+            TimeSpan during = stopwatch.Elapsed - animateStartTime;
+            if (during > AnimateDuration)
+            {
+                SetIndicator(_toValue);
+                CompositionTarget.Rendering -= OnRendering;
+                return;
+            }
+            double rate = EasingFunction.Ease(during.TotalSeconds / AnimateDuration.TotalSeconds);
+            SetIndicator(_fromValue + rate * (_toValue - _fromValue));
         }
 
         private double InRange(double value) => value > Maximum ? Maximum : value < Minimum ? Minimum : value;
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
+            //base.OnApplyTemplate();
             PART_Indicator = GetTemplateChild(nameof(PART_Indicator)) as FrameworkElement;
             PART_Track = GetTemplateChild(nameof(PART_Track)) as FrameworkElement;
             switch (InitAnimateFrom)
             {
                 case InitAnimateFrom.None:
+                    CompositionTarget.Rendering -= OnRendering;
                     SetIndicator(Value);
                     break;
                 case InitAnimateFrom.Minimum:
@@ -92,11 +115,6 @@ namespace Meowtrix.WPF.Extend.Controls
                     DoAnimation(CustomAnimateFrom, Value);
                     break;
             }
-        }
-
-        private void DoAnimation(double fromValue, double toValue)
-        {
-            CompositionTarget.Rendering += OnRendering;
         }
 
         private void SetIndicator(double value)
