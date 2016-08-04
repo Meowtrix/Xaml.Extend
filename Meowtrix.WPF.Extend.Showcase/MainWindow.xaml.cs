@@ -11,5 +11,12 @@ namespace Meowtrix.WPF.Extend.Showcase
         {
             InitializeComponent();
         }
+
+        private void ChangeAnimateProgress(object sender, RoutedEventArgs e)
+        {
+            if (animateprogress.Value != animateprogress.Maximum)
+                animateprogress.Value = animateprogress.Maximum;
+            else animateprogress.Value = animateprogress.Minimum;
+        }
     }
 }
