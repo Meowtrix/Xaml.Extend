@@ -9,7 +9,6 @@ namespace Meowtrix.WPF.Extend.Controls
 {
     public class AnimateProgress : ProgressBar
     {
-
         private FrameworkElement PART_Indicator;
         private FrameworkElement PART_Track;
 
@@ -53,6 +52,10 @@ namespace Meowtrix.WPF.Extend.Controls
         public static readonly DependencyProperty EasingFunctionProperty =
             DependencyProperty.Register(nameof(EasingFunction), typeof(IEasingFunction), typeof(AnimateProgress), new PropertyMetadata(new CircleEase { EasingMode = EasingMode.EaseOut }));
 
+        protected override void OnMaximumChanged(double oldMaximum, double newMaximum) { }
+
+        protected override void OnMinimumChanged(double oldMinimum, double newMinimum) { }
+
         protected override void OnValueChanged(double oldValue, double newValue) => DoAnimation(oldValue, newValue);
 
         private void DoAnimation(double fromValue, double toValue)
@@ -60,18 +63,20 @@ namespace Meowtrix.WPF.Extend.Controls
             _fromValue = fromValue;
             _toValue = toValue;
             animateStartTime = stopwatch.Elapsed;
+            stopanimation = false;
             CompositionTarget.Rendering += OnRendering;
         }
 
         private double _fromValue, _toValue;
         private double _trackWidth;
         private TimeSpan animateStartTime;
+        private bool stopanimation;
         private static Stopwatch stopwatch = Stopwatch.StartNew();
 
         private void OnRendering(object sender, EventArgs e)
         {
             TimeSpan during = stopwatch.Elapsed - animateStartTime;
-            if (during > AnimateDuration)
+            if (during > AnimateDuration || stopanimation)
             {
                 SetIndicator(_toValue);
                 CompositionTarget.Rendering -= OnRendering;
@@ -92,7 +97,7 @@ namespace Meowtrix.WPF.Extend.Controls
             switch (InitAnimateFrom)
             {
                 case InitAnimateFrom.None:
-                    CompositionTarget.Rendering -= OnRendering;
+                    stopanimation = true;
                     SetIndicator(Value);
                     break;
                 case InitAnimateFrom.Minimum:
