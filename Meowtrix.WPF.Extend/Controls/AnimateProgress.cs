@@ -9,6 +9,11 @@ namespace Meowtrix.WPF.Extend.Controls
 {
     public class AnimateProgress : ProgressBar
     {
+        static AnimateProgress()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(AnimateProgress), new FrameworkPropertyMetadata(typeof(AnimateProgress)));
+        }
+
         private FrameworkElement PART_Indicator;
         private FrameworkElement PART_Track;
 

@@ -21,4 +21,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="{x:Type controls:AnimateProgress}" BasedOn="{StaticResource {x:Type ProgressBar}}">
+        <Setter Property="Foreground" Value="#FF01D328"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
 </ResourceDictionary>
