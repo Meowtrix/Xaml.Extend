@@ -11,6 +11,7 @@
         <meowtrix:EnumComboBox Margin="4" EnumType="{x:Type Stretch}"/>
         <meowtrix:FilePicker Margin="4"/>
         <meowtrix:AnimateProgress x:Name="animateprogress" Margin="4" Height="10"/>
-        <Button Content="AnimateProgress" Click="ChangeAnimateProgress"/>
+        <Button Margin="4" Content="AnimateProgress" Click="ChangeAnimateProgress"/>
+        <Button Margin="4" Content="Aero" Click="ChangeTheme"/>
     </StackPanel>
 </Window>

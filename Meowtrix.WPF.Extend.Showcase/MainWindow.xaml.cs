@@ -18,5 +18,10 @@ namespace Meowtrix.WPF.Extend.Showcase
                 animateprogress.Value = animateprogress.Maximum;
             else animateprogress.Value = animateprogress.Minimum;
         }
+
+        private void ChangeTheme(object sender, RoutedEventArgs e)
+        {
+            SystemThemeHelper.SetTheme("aero", "normalcolor");
+        }
     }
 }
