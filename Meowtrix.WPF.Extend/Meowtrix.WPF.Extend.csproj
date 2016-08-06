@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\AnimateProgress.cs" />
+    <Compile Include="Controls\CommandHyperlink.cs" />
     <Compile Include="Controls\EnumComboBox.cs" />
     <Compile Include="Controls\FilePicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
