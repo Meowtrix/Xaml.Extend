@@ -96,7 +96,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Aero.NormalColor.xaml">
+    <Page Include="Themes\Aero.Normalcolor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
