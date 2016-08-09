@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Text;
+using System.Windows;
 
 namespace Meowtrix.WPF.Extend.Showcase
 {
@@ -22,6 +23,22 @@ namespace Meowtrix.WPF.Extend.Showcase
         private void ChangeTheme(object sender, RoutedEventArgs e)
         {
             SystemThemeHelper.SetTheme("aero", "normalcolor");
+        }
+
+        private void ShowBFS(object sender, RoutedEventArgs e)
+        {
+            var sb = new StringBuilder();
+            foreach (var c in this.BFS())
+                sb.AppendLine(c.ToString());
+            MessageBox.Show(sb.ToString());
+        }
+
+        private void ShowDFS(object sender, RoutedEventArgs e)
+        {
+            var sb = new StringBuilder();
+            foreach (var c in this.DFS())
+                sb.AppendLine(c.ToString());
+            MessageBox.Show(sb.ToString());
         }
     }
 }

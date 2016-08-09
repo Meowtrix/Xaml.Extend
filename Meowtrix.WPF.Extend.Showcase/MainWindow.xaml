@@ -7,11 +7,23 @@
         xmlns:meowtrix="urn:meowtrix"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <StackPanel Orientation="Vertical">
-        <meowtrix:EnumComboBox Margin="4" EnumType="{x:Type Stretch}"/>
-        <meowtrix:FilePicker Margin="4"/>
-        <meowtrix:AnimateProgress x:Name="animateprogress" Margin="4" Height="10"/>
-        <Button Margin="4" Content="AnimateProgress" Click="ChangeAnimateProgress"/>
-        <Button Margin="4" Content="Aero" Click="ChangeTheme"/>
-    </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="Visual Tree">
+                <MenuItem Header="BFS" Click="ShowBFS"/>
+                <MenuItem Header="DFS" Click="ShowDFS"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <meowtrix:EnumComboBox Margin="4" EnumType="{x:Type Stretch}"/>
+            <meowtrix:FilePicker Margin="4"/>
+            <meowtrix:AnimateProgress x:Name="animateprogress" Margin="4" Height="10"/>
+            <Button Margin="4" Content="AnimateProgress" Click="ChangeAnimateProgress"/>
+            <Button Margin="4" Content="Aero" Click="ChangeTheme"/>
+        </StackPanel>
+    </Grid>
 </Window>
