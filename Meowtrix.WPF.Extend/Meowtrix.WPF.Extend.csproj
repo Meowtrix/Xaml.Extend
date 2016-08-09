@@ -31,9 +31,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Meowtrix.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Meowtrix.UniversalClassLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Meowtrix.UniversalClassLibrary.1.2.0\lib\net46\Meowtrix.UniversalClassLibrary.dll</HintPath>
+    <Reference Include="Meowtrix.UniversalClassLibrary, Version=1.2.1.0, Culture=neutral, PublicKeyToken=5dcaec6183d7c002, processorArchitecture=MSIL">
+      <HintPath>..\packages\Meowtrix.UniversalClassLibrary.1.2.1\lib\net46\Meowtrix.UniversalClassLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -88,6 +94,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Meowtrix.snk" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
