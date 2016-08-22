@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Meowtrix.WPF.Extend"
                     xmlns:controls="clr-namespace:Meowtrix.WPF.Extend.Controls">
     <Style TargetType="{x:Type controls:FilePicker}">
         <Setter Property="Template">
@@ -21,7 +22,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type controls:AnimateProgress}" BasedOn="{StaticResource {x:Type ProgressBar}}">
+    <Style TargetType="{x:Type controls:AnimateProgress}">
+        <Setter Property="local:StyleBehavior.DynamicBaseStyle" Value="{x:Type ProgressBar}"/>
         <Setter Property="Foreground" Value="#FF01D328"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
