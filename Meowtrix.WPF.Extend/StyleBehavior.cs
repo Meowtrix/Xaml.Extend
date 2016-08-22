@@ -12,7 +12,8 @@ namespace Meowtrix.WPF.Extend
             foreach (var style in styles)
             {
                 if (newstyle.TargetType == null) newstyle.TargetType = style.TargetType;
-                else if (newstyle.TargetType != style.TargetType) throw new ArgumentException("Styles must target to same type");
+                else if (newstyle.TargetType.IsAssignableFrom(style.TargetType)) newstyle.TargetType = style.TargetType;
+                else if (!style.TargetType.IsAssignableFrom(newstyle.TargetType)) throw new ArgumentException("Styles must target to same derived type");
                 newstyle.Triggers.AddRange(style.Triggers);
                 newstyle.Setters.AddRange(style.Setters);
                 newstyle.Resources.MergedDictionaries.Add(style.Resources);
