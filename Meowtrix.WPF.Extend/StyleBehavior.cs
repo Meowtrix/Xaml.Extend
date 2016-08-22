@@ -60,6 +60,19 @@ namespace Meowtrix.WPF.Extend
             if (originalStyle == null)
             {
                 originalStyle = c.Style;
+                if (originalStyle == null)//implicit style
+                {
+                    for (var type = c.GetType(); type != null; type = type.BaseType)
+                    {
+                        originalStyle = c.TryFindResource(type) as Style;
+                        if (originalStyle != null) break;
+                    }
+                    if (originalStyle == null)//no default style
+                    {
+                        c.Style = baseStyle;
+                        return;
+                    }
+                }
                 SetOriginalStyle(c, originalStyle);
             }
             c.Style = Merge(baseStyle, originalStyle);
