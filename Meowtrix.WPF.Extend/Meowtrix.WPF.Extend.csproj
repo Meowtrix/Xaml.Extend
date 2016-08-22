@@ -75,6 +75,7 @@
     <Compile Include="Controls\CommandHyperlink.cs" />
     <Compile Include="Controls\EnumComboBox.cs" />
     <Compile Include="Controls\FilePicker.cs" />
+    <Compile Include="MultiStyleExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
